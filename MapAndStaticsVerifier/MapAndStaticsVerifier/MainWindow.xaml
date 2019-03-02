@@ -1,0 +1,112 @@
+﻿<!-- 
+ Copyright (C) 2013 Ian Karlinsey
+ 
+ UltimeLive is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ UltimaLive is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with UltimaLive.  If not, see <http://www.gnu.org/licenses/>. 
+  -->
+  
+  <Window x:Class="MapAndStaticsVerifier.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MapAndStaticsVerifier"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="Map and Statics Verifier v.0.25" Height="552" Width="817" Name="This">
+  <DockPanel>
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="Open" Click="MenuItem_Click"/>
+      <MenuItem Name="mnuSaveReport" Header="Save Report" Click="MenuItem_Click_1" IsEnabled="False"/>
+    </Menu>
+    <Grid Width="Auto"  HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Height="20">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Name="OperationLabel" Grid.Column="0" Text="" />
+      <ProgressBar Name="OperationPercentDone" Minimum="0" Maximum="100" Grid.Column="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      </ProgressBar>
+    </Grid>
+    <TreeView Name="FileTree"  Width="250" DockPanel.Dock="Left" ItemsSource="{Binding ElementName=This, Path=MapFiles}" >
+      <TreeView.Resources>
+        <HierarchicalDataTemplate DataType="{x:Type local:MulFileSet}" ItemsSource="{Binding MulFiles}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Index}" />
+          </StackPanel>
+        </HierarchicalDataTemplate>
+        <DataTemplate DataType="{x:Type local:MulFile}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding ShortFilename}" />
+            <TextBlock Margin="5,0,0,0" Text="(" />
+            <TextBlock Text="{Binding Filesize}" />
+            <TextBlock Text=" bytes)" />
+          </StackPanel>
+        </DataTemplate>
+      </TreeView.Resources>
+    </TreeView>
+    <Border BorderBrush="Gray" BorderThickness="1">
+      <ContentControl Content="{Binding ElementName=FileTree, Path=SelectedItem}">
+        <ContentControl.Resources>
+
+
+          <DataTemplate DataType="{x:Type local:MapMulFile}">
+            <DockPanel>
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+                <TextBlock Text="File path: " />
+                <TextBlock Text="{Binding Path=Filename}" />
+              </StackPanel>
+              <TextBlock Text="Bad Blocks:" DockPanel.Dock="Top"/>
+              <ListBox ItemsSource="{Binding Path=BadBlocks}"></ListBox>
+            </DockPanel>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type local:StaIdxMulFile}">
+            <DockPanel>
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+                <TextBlock Text="File path: " />
+                <TextBlock Text="{Binding Path=Filename}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <TextBlock Text="Bad Indices: "/>
+                <TextBlock Text="{Binding Path=BadIndices.Count}" DockPanel.Dock="Top"/>
+              </StackPanel>
+
+              <TreeView ItemsSource="{Binding Path=BadIndices}">
+                <TreeView.Resources >
+                  <HierarchicalDataTemplate DataType="{x:Type local:IndexForStaticBlock}" ItemsSource="{Binding Errors}">
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="{Binding Block}" />
+                      <TextBlock Text=" - Offset:" />
+                      <TextBlock Margin="10,0,0,0" Text="{Binding Offset}" />
+                      <TextBlock Margin="10,0,0,0" Text="Length:" />
+                      <TextBlock Margin="10,0,0,0" Text="{Binding Length}" />
+                      <TextBlock Margin="10,0,0,0" Text="Version:" />
+                      <TextBlock Margin="10,0,0,0" Text="{Binding Version}" />
+                    </StackPanel>
+                  </HierarchicalDataTemplate>
+
+                  <DataTemplate DataType="{x:Type System:UInt32}">
+                    <TextBlock Text="{Binding}" />
+                  </DataTemplate>
+
+                  <DataTemplate DataType="{x:Type System:String}">
+                    <TextBlock Text="{Binding}" />
+                  </DataTemplate>
+
+                </TreeView.Resources>
+              </TreeView>
+            </DockPanel>
+          </DataTemplate>
+        </ContentControl.Resources>
+      </ContentControl>
+    </Border>
+  </DockPanel>
+</Window>

@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseTest|Win32">
+      <Configuration>ReleaseTest</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{70890819-C61D-4D5E-80D4-477E21601B4B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>UltimaLive</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='ReleaseTest|Win32'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>
+    </LinkIncremental>
+    <TargetName>Igrping</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>Igrping</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseTest|Win32'">
+    <TargetName>Igrping</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDLL;%(PreprocessorDefinitions);DEBUG;PRINT_PACKETS;</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>mhook.lib;Version.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0410</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ULTIMALIVE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <AdditionalDependencies>mhook.lib;Version.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ClientRedirections.cpp" />
+    <ClCompile Include="DotNetHost.cpp" />
+    <ClCompile Include="FileSystem\BaseFileManager.cpp" />
+    <ClCompile Include="FileSystem\ClientFileHandleSet.cpp" />
+    <ClCompile Include="FileSystem\ConcreteFileManagers\FileManager.cpp" />
+    <ClCompile Include="FileSystem\ConcreteFileManagers\FileManager_7_0_29_2.cpp" />
+    <ClCompile Include="FileSystem\FileManagerFactory.cpp" />
+    <ClCompile Include="FileSystem\MapFileSet.cpp" />
+    <ClCompile Include="FileSystem\Uop\UopStructs.cpp" />
+    <ClCompile Include="FileSystem\Uop\UopUtility.cpp" />
+    <ClCompile Include="Igrping.cpp" />
+    <ClCompile Include="LocalPeHelper32.cpp" />
+    <ClCompile Include="LoginHandler.cpp" />
+    <ClCompile Include="Maps\Atlas.cpp" />
+    <ClCompile Include="MasterControlUtils.cpp" />
+    <ClCompile Include="Network\BasePacketHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\AttackRequestHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\ChangeMapHandler_7_0_29_2.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\LoginCompleteHandler_7_0_29_2.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\LoginConfirmHandler_7_0_29_2.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\LogoutRequestHandler_7_0_29_2.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\MovementRequestHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\ServerVersionRequestHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\ServerMobileStatusHandler_7_0_29_2.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveCRC32RequestHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\ClientCrashPacketHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveHashQueryHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveLoginCompleteHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveRefreshClientViewHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveUpdateLandBlockHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveUpdateMapDefinitionsHandler.cpp" />
+    <ClCompile Include="Network\ConcretePacketHandlers\UltimaLiveUpdateStaticsHandler.cpp" />
+    <ClCompile Include="Network\NetworkManager.cpp" />
+    <ClCompile Include="Network\PacketHandlerFactory.cpp" />
+    <ClCompile Include="ProgressBarDialog.cpp" />
+    <ClCompile Include="UoLiveAppState.cpp" />
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientRedirections.h" />
+    <ClInclude Include="DotNetHost.h" />
+    <ClInclude Include="FileSystem\BaseFileManager.h" />
+    <ClInclude Include="FileSystem\ClientFileHandleSet.h" />
+    <ClInclude Include="FileSystem\ConcreteFileManagers\FileManager.h" />
+    <ClInclude Include="FileSystem\ConcreteFileManagers\FileManager_7_0_29_2.h" />
+    <ClInclude Include="FileSystem\FileManagerFactory.h" />
+    <ClInclude Include="FileSystem\MapFileSet.h" />
+    <ClInclude Include="FileSystem\uop.h" />
+    <ClInclude Include="FileSystem\Uop\UopStructs.h" />
+    <ClInclude Include="FileSystem\Uop\UopUtility.h" />
+    <ClInclude Include="Igrping.h" />
+    <ClInclude Include="LocalPeHelper32.hpp" />
+    <ClInclude Include="LoginHandler.h" />
+    <ClInclude Include="Maps\Atlas.h" />
+    <ClInclude Include="Maps\MapDefinition.h" />
+    <ClInclude Include="MasterControlUtils.h" />
+    <ClInclude Include="mhook.h" />
+    <ClInclude Include="Network\BasePacketHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\AttackRequestHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\ChangeMapHandler_7_0_29_2.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\MovementRequestHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveCRC32RequestHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\LoginCompleteHandler_7_0_29_2.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\LoginConfirmHandler_7_0_29_2.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\LogoutRequestHandler_7_0_29_2.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\ServerVersionRequestHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\ServerMobileStatusHandler_7_0_29_2.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\ClientCrashPacketHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveHashQueryHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveLoginCompleteHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveRefreshClientViewHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveUpdateLandBlockHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveUpdateMapDefinitionsHandler.h" />
+    <ClInclude Include="Network\ConcretePacketHandlers\UltimaLiveUpdateStaticsHandler.h" />
+    <ClInclude Include="Network\NetworkManager.h" />
+    <ClInclude Include="Network\PacketHandlerFactory.h" />
+    <ClInclude Include="ProgressBarDialog.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="UoLiveAppState.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="mhook.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Protocol.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UltimaLive.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ItemDefinitionGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+    <ClCompile>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <StructMemberAlignment>16Bytes</StructMemberAlignment>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <StringPooling>true</StringPooling>
+    </ClCompile>
+    <Link />
+    <Link>
+      <LargeAddressAware>true</LargeAddressAware>
+      <ImageHasSafeExceptionHandlers>true</ImageHasSafeExceptionHandlers>
+      <DataExecutionPrevention>false</DataExecutionPrevention>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseTest|Win32'">
+    <ClCompile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mhook.lib;Version.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>
+      </ImportLibrary>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
