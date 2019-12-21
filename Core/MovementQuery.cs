@@ -20,10 +20,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 */
 
-using System;
 using Server;
 using Server.Mobiles;
-using Server.Network;
+using UltimaLive.Network;
 
 namespace UltimaLive
 {
@@ -41,11 +40,13 @@ namespace UltimaLive
 
         public int QueryMobile(Mobile m, int previousMapBlock)
         {
+            if (m.Map == null) return 0;
+
             int blocknum = (((m.Location.X >> 3) * m.Map.Tiles.BlockHeight) + (m.Location.Y >> 3));
 
             if (blocknum != previousMapBlock)
             {
-              m.Send(new UltimaLive.Network.QueryClientHash(m));
+              m.Send(new QueryClientHash(m));
             }
 
             return blocknum;

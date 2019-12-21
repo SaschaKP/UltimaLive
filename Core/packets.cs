@@ -152,40 +152,36 @@ namespace UltimaLive.Network
         public MapDefinitions()
             : base(0x3F)
         {
-            Dictionary<int, UltimaLive.MapRegistry.MapDefinition>.ValueCollection definitions = MapRegistry.Definitions.Values;
-
-            int length = definitions.Count * 9; //12 * 9 = 108
-            int count = length / 7; //108 / 7 = 15
+            int maps = MapRegistry.MapAssociations.Count;
+            int length = maps * 9;
+            int count = length / 7;
             int padding = 0;
-            if (length - (count * 7) > 0) //
+            if (length - (count * 7) > 0)
             {
                 count++;
-                padding = (count * 7) - length; 
+                padding = (count * 7) - length;
             }
-                                                        //byte 000 to 015  -  The first 15 bytes of this packet are always the same
-                                                        //byte 000         -  cmd
-            this.EnsureCapacity(15 + length);           //byte 001 to 002  -  packet size
-            m_Stream.Write((uint)0x00);                 //byte 003 to 006  -  block number, doesn't really apply in this case
-            m_Stream.Write((int)count);                 //byte 007 to 010  -  number of statics in the packet, in this case its calculated to 
-                                                        //                    hold enough space for all the map definitions
-            m_Stream.Write((ushort)0x00);               //byte 011 to 012  -  UltimaLive sequence number, doesn't apply in this case
-            m_Stream.Write((byte)0x01);                 //byte 013         -  UltimaLive command (0x01 is Update Map Definitions)
-            m_Stream.Write((byte)0x00);                 //byte 014         -  UltimaLive mapnumber, doesn't apply in this case
-                                                        //byte 015 to end  -  Map Definitions
+                                                  //byte 000 to 015  -  The first 15 bytes of this packet are always the same
+                                                  //byte 000         -  cmd
+            EnsureCapacity(15 + length + padding);//byte 001 to 002  -  packet size
+            m_Stream.Write((uint)0x00);           //byte 003 to 006  -  block number, doesn't really apply in this case
+            m_Stream.Write(count);                //byte 007 to 010  -  number of statics in the packet, in this case its calculated to 
+                                                  //                    hold enough space for all the map definitions
+            m_Stream.Write((ushort)0x00);         //byte 011 to 012  -  UltimaLive sequence number, doesn't apply in this case
+            m_Stream.Write((byte)0x01);           //byte 013         -  UltimaLive command (0x01 is Update Map Definitions)
+            m_Stream.Write((byte)0x00);           //byte 014         -  UltimaLive mapnumber, doesn't apply in this case
+                                                  //byte 015 to end  -  Map Definitions
 
-            foreach (MapRegistry.MapDefinition md in definitions)
+            for (int i = 0; i < maps; i++)
             {
+                MapRegistry.MapDefinition md = MapRegistry.Definitions[i];
                 m_Stream.Write((byte)md.FileIndex);                 //iteration byte 000         -  map file index number
                 m_Stream.Write((ushort)md.Dimensions.X);            //iteration byte 001 to 002  -  map width
                 m_Stream.Write((ushort)md.Dimensions.Y);            //iteration byte 003 to 004  -  map height
                 m_Stream.Write((ushort)md.WrapAroundDimensions.X);  //iteration byte 005 to 006  -  wrap around dimension X
                 m_Stream.Write((ushort)md.WrapAroundDimensions.Y);  //iteration byte 007 to 008  -  wrap around dimension Y
             }
-
-            for (int i = 0; i < padding; i++)
-            {
-                m_Stream.Write((byte)0x00);
-            }
+            m_Stream.Fill();
         }
     }
     #endregion
